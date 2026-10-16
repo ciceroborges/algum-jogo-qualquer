@@ -1,0 +1,44 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://personagens/caelan.gd" id="1_caelan"]
+
+[sub_resource type="CapsuleShape3D" id="forma_corpo"]
+radius = 0.35
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="material_corpo"]
+albedo_color = Color(0.32, 0.4, 0.26, 1)
+roughness = 0.9
+
+[sub_resource type="CapsuleMesh" id="malha_corpo"]
+material = SubResource("material_corpo")
+radius = 0.35
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="material_frente"]
+albedo_color = Color(0.85, 0.75, 0.55, 1)
+
+[sub_resource type="BoxMesh" id="malha_frente"]
+material = SubResource("material_frente")
+size = Vector3(0.2, 0.15, 0.25)
+
+[node name="Caelan" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_caelan")
+
+[node name="Colisao" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.9, 0)
+shape = SubResource("forma_corpo")
+
+[node name="Corpo" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.9, 0)
+mesh = SubResource("malha_corpo")
+
+[node name="Frente" type="MeshInstance3D" parent="Corpo"]
+position = Vector3(0, 0.5, 0.33)
+mesh = SubResource("malha_frente")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_desired_distance = 0.5
+target_desired_distance = 0.3
+radius = 0.4

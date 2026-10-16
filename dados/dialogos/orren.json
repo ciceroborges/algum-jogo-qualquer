@@ -1,0 +1,87 @@
+{
+	"entradas": [
+		{ "condicao": "escolta_aceita", "no": "ja_contratado" },
+		{ "condicao": "escolta_recusada", "no": "voltou" },
+		{ "no": "abertura" }
+	],
+	"nos": {
+		"abertura": {
+			"fala": "Você tem cara de quem sabe usar esse arco. Sou Orren, mestre desta caravana. Preciso de alguém para escoltar três carroças até Vau Seco. Quatro dias de estrada, se o tempo ajudar.",
+			"opcoes": [
+				{ "texto": "Quanto paga?", "ir": "pagamento" },
+				{ "texto": "Por que não contrata mais gente?", "ir": "por_que_eu" },
+				{ "texto": "Não estou procurando trabalho.", "ir": "recusa" }
+			]
+		},
+		"por_que_eu": {
+			"fala": "Contratei dois homens. Sumiram ontem à noite com o adiantamento e me deixaram um recado pregado na carroça.",
+			"opcoes": [
+				{ "texto": "Que recado?", "ir": "recado" },
+				{ "texto": "Quanto paga?", "ir": "pagamento" }
+			]
+		},
+		"recado": {
+			"fala": "Um pano com um símbolo pintado: um arco quebrado dentro de um círculo. Não sei o que quer dizer. Só sei que meus homens não voltaram.",
+			"opcoes": [
+				{
+					"texto": "Deixe-me ver esse pano.",
+					"teste": { "atributo": "percepcao", "dificuldade": 7, "sucesso": "pano_reconhecido", "falha": "pano_comum" }
+				},
+				{ "texto": "Quanto paga?", "ir": "pagamento" }
+			]
+		},
+		"pano_reconhecido": {
+			"define": { "reconheceu_simbolo": true },
+			"fala": "A tinta é velha, mas o traço é firme. Você já viu esse símbolo. Tatuado no braço de um dos homens naquela estrada, no dia em que o Caçador mandou você correr.",
+			"opcoes": [
+				{ "texto": "(Guardar isso para si.) Quanto paga?", "ir": "pagamento" }
+			]
+		},
+		"pano_comum": {
+			"fala": "Um pano sujo e um pouco de tinta. Nada que você reconheça. Ainda assim, algo nele incomoda.",
+			"opcoes": [
+				{ "texto": "Quanto paga?", "ir": "pagamento" }
+			]
+		},
+		"pagamento": {
+			"fala": "Vinte moedas na chegada. A comida fica por minha conta enquanto estivermos na estrada.",
+			"opcoes": [
+				{ "texto": "Fechado.", "define": { "escolta_aceita": true, "pagamento": 20 }, "ir": "aceito" },
+				{
+					"texto": "Vinte moedas para arriscar o pescoço por quatro dias? Trinta.",
+					"teste": { "atributo": "astucia", "dificuldade": 8, "sucesso": "negociou", "falha": "nao_negociou" }
+				},
+				{ "texto": "Vou pensar.", "ir": "fim" }
+			]
+		},
+		"negociou": {
+			"define": { "escolta_aceita": true, "pagamento": 30 },
+			"fala": "Ladrão. Trinta, então. Mas se eu perder uma carroça, desconto do seu bolso.",
+			"ir": "aceito"
+		},
+		"nao_negociou": {
+			"fala": "Vinte. É o que eu tenho. Pegar ou largar.",
+			"opcoes": [
+				{ "texto": "Fechado.", "define": { "escolta_aceita": true, "pagamento": 20 }, "ir": "aceito" },
+				{ "texto": "Então largo.", "ir": "recusa" }
+			]
+		},
+		"aceito": {
+			"fala": "Partimos amanhã, ao nascer do sol. Durma bem. A estrada não perdoa quem chega cansado."
+		},
+		"recusa": {
+			"define": { "escolta_recusada": true },
+			"fala": "Uma pena. Se mudar de ideia, partimos amanhã cedo."
+		},
+		"voltou": {
+			"fala": "Mudou de ideia?",
+			"opcoes": [
+				{ "texto": "Talvez. Quanto paga?", "ir": "pagamento" },
+				{ "texto": "Não.", "ir": "fim" }
+			]
+		},
+		"ja_contratado": {
+			"fala": "Amanhã cedo. {pagamento} moedas na chegada, como combinamos. Vá descansar."
+		}
+	}
+}

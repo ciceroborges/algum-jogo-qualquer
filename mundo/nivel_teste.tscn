@@ -1,0 +1,106 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://mundo/nivel.gd" id="1_nivel"]
+[ext_resource type="Script" path="res://mundo/bloco.gd" id="2_bloco"]
+[ext_resource type="PackedScene" path="res://personagens/caelan.tscn" id="3_caelan"]
+[ext_resource type="PackedScene" path="res://personagens/npc.tscn" id="4_npc"]
+[ext_resource type="PackedScene" path="res://camera/camera_crpg.tscn" id="5_camera"]
+
+[sub_resource type="ProceduralSkyMaterial" id="material_ceu"]
+sky_top_color = Color(0.42, 0.6, 0.82, 1)
+sky_horizon_color = Color(0.86, 0.78, 0.66, 1)
+ground_horizon_color = Color(0.86, 0.78, 0.66, 1)
+ground_bottom_color = Color(0.4, 0.33, 0.25, 1)
+
+[sub_resource type="Sky" id="ceu"]
+sky_material = SubResource("material_ceu")
+
+[sub_resource type="Environment" id="ambiente"]
+background_mode = 2
+sky = SubResource("ceu")
+tonemap_mode = 2
+ssao_enabled = true
+
+[sub_resource type="NavigationMesh" id="malha_navegacao"]
+geometry_parsed_geometry_type = 1
+agent_radius = 0.5
+region_min_size = 30.0
+
+[node name="NivelTeste" type="Node3D"]
+script = ExtResource("1_nivel")
+
+[node name="Ambiente" type="WorldEnvironment" parent="."]
+environment = SubResource("ambiente")
+
+[node name="Sol" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.9, 0.6, 0)
+light_color = Color(1, 0.94, 0.82, 1)
+shadow_enabled = true
+
+[node name="Navegacao" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("malha_navegacao")
+
+[node name="Chao" type="StaticBody3D" parent="Navegacao"]
+position = Vector3(0, -0.2, 0)
+script = ExtResource("2_bloco")
+tamanho = Vector3(60, 0.2, 60)
+cor = Color(0.62, 0.53, 0.38, 1)
+
+[node name="Armazem" type="StaticBody3D" parent="Navegacao"]
+position = Vector3(-7, 0, -5)
+script = ExtResource("2_bloco")
+tamanho = Vector3(5, 3, 7)
+cor = Color(0.55, 0.4, 0.28, 1)
+altura_telhado = 1.5
+
+[node name="Casa" type="StaticBody3D" parent="Navegacao"]
+position = Vector3(-7, 0, 6)
+script = ExtResource("2_bloco")
+tamanho = Vector3(4.5, 2.6, 5)
+cor = Color(0.62, 0.5, 0.36, 1)
+altura_telhado = 1.3
+
+[node name="Taverna" type="StaticBody3D" parent="Navegacao"]
+position = Vector3(8, 0, 3)
+script = ExtResource("2_bloco")
+tamanho = Vector3(6, 4, 9)
+cor = Color(0.5, 0.33, 0.22, 1)
+altura_telhado = 1.8
+cor_telhado = Color(0.3, 0.18, 0.12, 1)
+
+[node name="Estabulo" type="StaticBody3D" parent="Navegacao"]
+position = Vector3(8, 0, -9)
+script = ExtResource("2_bloco")
+tamanho = Vector3(5, 2.8, 5)
+cor = Color(0.6, 0.45, 0.3, 1)
+altura_telhado = 1.2
+
+[node name="Carroca" type="StaticBody3D" parent="Navegacao"]
+position = Vector3(1.5, 0, -2)
+rotation = Vector3(0, 0.25, 0)
+script = ExtResource("2_bloco")
+tamanho = Vector3(1.6, 1.3, 3.2)
+cor = Color(0.45, 0.32, 0.2, 1)
+
+[node name="Caixas" type="StaticBody3D" parent="Navegacao"]
+position = Vector3(-2.5, 0, -6)
+script = ExtResource("2_bloco")
+tamanho = Vector3(1.2, 1, 1.2)
+cor = Color(0.7, 0.56, 0.36, 1)
+
+[node name="Cerca" type="StaticBody3D" parent="Navegacao"]
+position = Vector3(-11, 0, 0)
+script = ExtResource("2_bloco")
+tamanho = Vector3(0.2, 1, 22)
+cor = Color(0.4, 0.3, 0.2, 1)
+
+[node name="Caelan" parent="." instance=ExtResource("3_caelan")]
+position = Vector3(0, 0, 4)
+
+[node name="Orren" parent="." instance=ExtResource("4_npc")]
+position = Vector3(3.2, 0, -3.5)
+nome = "Orren"
+dialogo = "res://dados/dialogos/orren.json"
+
+[node name="CameraCRPG" parent="." node_paths=PackedStringArray("alvo") instance=ExtResource("5_camera")]
+alvo = NodePath("../Caelan")

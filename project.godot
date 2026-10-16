@@ -1,0 +1,38 @@
+; Engine configuration file.
+
+config_version=5
+
+[application]
+
+config/name="Algum Jogo Qualquer"
+run/main_scene="res://mundo/nivel_teste.tscn"
+config/features=PackedStringArray("4.7", "Forward Plus")
+
+[autoload]
+
+Estado="*res://sistemas/estado.gd"
+Dialogo="*res://sistemas/dialogo/dialogo.gd"
+
+[display]
+
+window/size/viewport_width=1600
+window/size/viewport_height=900
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[input]
+
+camera_girar_esquerda={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":81,"key_label":0,"unicode":113,"location":0,"echo":false,"script":null)
+]
+}
+camera_girar_direita={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":69,"key_label":0,"unicode":101,"location":0,"echo":false,"script":null)
+]
+}
+
+[rendering]
+
+anti_aliasing/quality/msaa_3d=2
